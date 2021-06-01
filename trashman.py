@@ -170,13 +170,13 @@ class Trashman:
 
         ref = "refs/heads/" + branch_name
         try:
-            self.repo.create_git_ref(ref, sha=self.repo.get_branch("master").commit.sha)
+            self.repo.create_git_ref(ref, sha=self.repo.get_branch("main").commit.sha)
             print("Created new branch: {}".format(ref))
             old_file = self.repo.get_contents(self.datafile)
         except:
             print("Reused old branch: {}".format(ref))
             old_file = self.repo.get_contents(self.datafile, ref)
-            pass
+
 
         self.repo.update_file(
             path=old_file.path,
