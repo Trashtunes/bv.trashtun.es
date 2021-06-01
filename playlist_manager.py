@@ -22,18 +22,19 @@ def manage_playlist():
 
     with open("./_data/trash.yml") as file:
         trash_list = yaml.load(file, Loader=yaml.FullLoader)
+        if trash_list:
 
-        for title in trash_list:
-            try:
-                uri = title["spotify_uri"]
-                tracklist.append(uri)
-                api_res = sp.track(uri)
-                print(api_res["name"])
-            except SpotifyException as error:
-                print("Error with track: {}".format(title["songname"]))
-                raise error
+            for title in trash_list:
+                try:
+                    uri = title["spotify_uri"]
+                    tracklist.append(uri)
+                    api_res = sp.track(uri)
+                    print(api_res["name"])
+                except SpotifyException as error:
+                    print("Error with track: {}".format(title["songname"]))
+                    raise error
 
     results = sp.playlist_replace_items(playlist_id, tracklist)
 
-
-manage_playlist()
+if __name__ == "__main__":
+    manage_playlist()
