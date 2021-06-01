@@ -313,12 +313,11 @@ class Trashman:
         self.new_trash["issue_id"] = self.issue.number
         self.new_trash["date"] = self.issue.created_at.strftime("%d.%m.%Y")
 
-        if self.new_trash["audio_comment"]:
+        if self.new_trash.get("audio_comment"):
             self.new_trash["comment_url"] = self.upload_audio_to_s3(
                 self.issue, self.new_trash
             )
         else:
-            del self.new_trash["audio_comment"]
             self.new_trash["comment_url"] = None
 
         trash = self.insert_new_trash(self.new_trash)
