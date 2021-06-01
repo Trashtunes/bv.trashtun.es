@@ -10,7 +10,9 @@ from pprint import pprint
 import requests
 import zipfile
 from playlist_manager import manage_playlist
-
+from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth, SpotifyPKCE
+from spotipy.exceptions import SpotifyException
+import spotipy
 
 class Trashman:
 
@@ -144,7 +146,7 @@ class Trashman:
                 print("No matching entry found. Appending new trash.")
                 trash_list.append(new_trash)
 
-            print("Sorting all entries by data and if possible by id")
+            print("Sorting all entries by date and if possible by id")
             trash_list.sort(
                 key=lambda k: (
                     datetime.datetime.strptime(k["date"], "%d.%m.%Y"),
@@ -269,6 +271,24 @@ class Trashman:
 
         self.merge_pr(pr, self.latest_comment_user)
         print("::endgroup::")
+
+    def enrich_trash(new_trash):
+        refresh_token = os.environ["SPOTIFY_REFRESH_TOKEN"]
+        scope = "playlist-modify-public"
+        manager = spotipy.SpotifyOAuth(scope=scope)
+        manager.refresh_access_token(refresh_token)
+
+        sp = spotipy.Spotify(auth_manager=manager)
+
+        track = sp.track("spotify_uri")
+
+        new_trash['trackname']=track['name']
+        new_trash['album']=track['album']['name']
+        new_trash['artist']= [x['name'] for x in track['artists']]
+        new_trash['mp3_url']=track['preview_url']
+        new_trash['cover_art']=track['album']['images'][0]['url']
+
+        return new_trash
 
     def main(self):
 
