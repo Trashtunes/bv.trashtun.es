@@ -1,3 +1,4 @@
+import enum
 from github import Github
 import datetime
 import os
@@ -132,15 +133,18 @@ class Trashman:
                     new_trash["issue_id"]
                 )
             )
-            for index in range(len(trash_list)):
-                try:
-                    if trash_list[index]["issue_id"] == new_trash["issue_id"]:
-                        print("Found entry with matching id")
-                        trash_list[index] = new_trash
-                        written = True
-                        break
-                except KeyError:
-                    pass
+            if trash_list:
+                for index, object in enumerate(trash_list):
+                    try:
+                        if object["issue_id"] == new_trash["issue_id"]:
+                            print("Found entry with matching id")
+                            object = new_trash
+                            written = True
+                            break
+                    except KeyError:
+                        pass
+            else:
+                trash_list=[]
 
             if not written:
                 print("No matching entry found. Appending new trash.")
