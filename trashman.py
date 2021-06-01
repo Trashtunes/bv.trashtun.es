@@ -170,13 +170,13 @@ class Trashman:
 
         ref = "refs/heads/" + branch_name
         try:
-            self.repo.create_git_ref(ref, sha=self.repo.get_branch("master").commit.sha)
+            self.repo.create_git_ref(ref, sha=self.repo.get_branch("main").commit.sha)
             print("Created new branch: {}".format(ref))
             old_file = self.repo.get_contents(self.datafile)
         except:
             print("Reused old branch: {}".format(ref))
             old_file = self.repo.get_contents(self.datafile, ref)
-            pass
+
 
         self.repo.update_file(
             path=old_file.path,
@@ -202,12 +202,12 @@ class Trashman:
 
         try:
             pr = self.repo.create_pull(
-                pr_title, pr_body, head=branch_name, base="master"
+                pr_title, pr_body, head=branch_name, base="main"
             )
             print("Created new PR")
         except Exception as e:
             pr = self.repo.get_pulls(
-                state="open", sort="created", head=branch_name, base="master"
+                state="open", sort="created", head=branch_name, base="main"
             )[0]
             print("Reused existing PR")
 
