@@ -1,3 +1,17 @@
+- album: Chlorine
+  artist:
+  - Pabst
+  captions: 'Add your captions here. Always leading with two spaces.
+
+    '
+  comment_url: null
+  cover_art: https://i.scdn.co/image/ab67616d0000b273cc11f2a6cfcdba7685272ed7
+  date: 02.06.2021
+  issue_id: 5
+  mp3_url: https://p.scdn.co/mp3-preview/943ba3b88dcb0f280eb3c48cd077c893c78ecf6d?cid=1a8423d250ee4339bea73c980ee9738b
+  songname: Add the title/songtitle of the posting here
+  spotify_uri: https://open.spotify.com/track/6kLIjDLjAt9Mg7XCeHw0yZ?si=a297477bddcb4d5d
+  trackname: Vagabondage
 - captions: "Add your captions here. Always leading with two spaces.      \n"
   comment_url: null
   date: 01.06.2021
