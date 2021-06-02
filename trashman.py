@@ -286,13 +286,13 @@ class Trashman:
 
         track = sp.track(new_trash["spotify_uri"])
 
-        new_trash['trackname']=track['name']
-        new_trash['album']=track['album']['name']
-        new_trash['artist']= [x['name'] for x in track['artists']]
-        new_trash['mp3_url']=track['preview_url']
-        new_trash['cover_art']=track['album']['images'][0]['url']
+        self.new_trash['trackname']=track['name']
+        self.new_trash['album']=track['album']['name']
+        self.new_trash['artist']= [x['name'] for x in track['artists']]
+        self.new_trash['mp3_url']=track['preview_url']
+        self.new_trash['cover_art']=track['album']['images'][0]['url']
 
-        return new_trash
+
 
     def main(self):
 
@@ -317,7 +317,9 @@ class Trashman:
         self.new_trash["issue_id"] = self.issue.number
         self.new_trash["date"] = self.issue.created_at.strftime("%d.%m.%Y")
 
-        self.new_trash = self.enrich_trash(self.new_trash)
+        self.enrich_trash(self.new_trash)
+
+        print(self.new_trash)
 
         if self.new_trash.get("audio_comment"):
             self.new_trash["comment_url"] = self.upload_audio_to_s3(
