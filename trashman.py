@@ -291,7 +291,7 @@ class Trashman:
         self.new_trash['artist']= [x['name'] for x in track['artists']]
         self.new_trash['mp3_url']=track['preview_url']
         self.new_trash['cover_art']=track['album']['images'][0]['url']
-
+        self.new_trash['duration']=int(round(track['duration_ms']/60000, 0))
 
 
     def main(self):
