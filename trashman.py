@@ -276,7 +276,7 @@ class Trashman:
         self.merge_pr(pr, self.latest_comment_user)
         print("::endgroup::")
 
-    def enrich_trash(new_trash):
+    def enrich_trash(self, new_trash):
         refresh_token = os.environ["SPOTIFY_REFRESH_TOKEN"]
         scope = "playlist-modify-public"
         manager = spotipy.SpotifyOAuth(scope=scope)
@@ -284,7 +284,7 @@ class Trashman:
 
         sp = spotipy.Spotify(auth_manager=manager)
 
-        track = sp.track("spotify_uri")
+        track = sp.track(new_trash["spotify_uri"])
 
         new_trash['trackname']=track['name']
         new_trash['album']=track['album']['name']
@@ -316,6 +316,8 @@ class Trashman:
 
         self.new_trash["issue_id"] = self.issue.number
         self.new_trash["date"] = self.issue.created_at.strftime("%d.%m.%Y")
+
+        self.new_trash = self.enrich_trash(self.new_trash)
 
         if self.new_trash.get("audio_comment"):
             self.new_trash["comment_url"] = self.upload_audio_to_s3(
