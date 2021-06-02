@@ -8,6 +8,7 @@ assignees: ''
 ---
 
 ```
+tagline: Add a short tagline
 songname: Add the title/songtitle of the posting here
 spotify_uri: Add the spotify uri or link of the track here
 captions: |
